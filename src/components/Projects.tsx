@@ -77,7 +77,6 @@ const ProjectCard: React.FC<CardProps> = ({ project, index, reverse }) => {
         if (!entry.isIntersecting) return;
         obs.disconnect();
 
-        const easing = 'cubic-bezier(0.22, 1, 0.36, 1)';
         const base = index * 60; // offset per card
 
         /* card wrapper pop */
