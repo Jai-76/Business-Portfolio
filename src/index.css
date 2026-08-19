@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ============================
+   GLOBAL ANIMATION KEYFRAMES
+   ============================ */
+@keyframes sectionFadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes sectionScaleIn {
+  from { opacity: 0; transform: scale(0.96) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes appEnter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Page-load fade in */
+body {
+  animation: appEnter 0.4s ease both;
+}
+
+/* ============================
+   CSS CUSTOM PROPERTIES
+   ============================ */
+:root {
+  --ink: #171512;
+  --paper: #F4EFE6;
+  --paper-dim: #ECE5D6;
+  --paper-deep: #E4DDD0;
+  --clay: #B2643C;
+  --clay-soft: #D98F63;
+  --clay-pale: #F0D4C2;
+  --sage: #5C6B52;
+  --sage-pale: #CDD5C8;
+  --line: rgba(23, 21, 18, 0.14);
+  --line-soft: rgba(23, 21, 18, 0.08);
+  --display: 'Fraunces', Georgia, serif;
+  --body: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* ============================
+   RESET
+   ============================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--clay);
+  color: var(--paper);
+}
+
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+
+/* ============================
+   SCROLL BAR
+   ============================ */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--paper); }
+::-webkit-scrollbar-thumb { background: rgba(23, 21, 18, 0.2); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(23, 21, 18, 0.35); }
+
+/* ============================
+   SECTION DIVIDER
+   ============================ */
+.section-divider {
+  max-width: 1080px;
+  margin: 0 auto;
+  height: 1px;
+  background: var(--line-soft);
+  padding: 0 36px;
+}
+
+/* ============================
+   ACCESSIBILITY
+   ============================ */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ============================
+   REDUCED MOTION
+   ============================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

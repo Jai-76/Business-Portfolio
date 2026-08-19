@@ -1,0 +1,309 @@
+/* =============================================
+   PROJECTS — scroll-triggered pop animations
+   ============================================= */
+
+@keyframes cardReveal {
+  0%   { opacity: 0; transform: translateY(48px) scale(0.97); }
+  60%  { transform: translateY(-4px) scale(1.005); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes visualSlide {
+  from { opacity: 0; transform: translateX(-32px) scale(0.96); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes visualSlideRight {
+  from { opacity: 0; transform: translateX(32px) scale(0.96); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes bodySlide {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes bodySlideLeft {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes headerFadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes filterPop {
+  0%   { opacity: 0; transform: scale(0.8) translateY(8px); }
+  70%  { transform: scale(1.05) translateY(0); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes tagPop {
+  0%   { opacity: 0; transform: scale(0.7); }
+  70%  { transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes outcomeFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Section wrapper ---- */
+.projects {
+  padding: 96px 36px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.inner {}
+
+/* ---- Header ---- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 56px;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.sectionTag {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--clay);
+  margin-bottom: 14px;
+  opacity: 0;
+}
+.sectionTag.visible {
+  animation: headerFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.heading {
+  font-family: var(--display);
+  font-weight: 450;
+  font-size: clamp(28px, 3.4vw, 40px);
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  opacity: 0;
+}
+.heading.visible {
+  animation: headerFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.filter {
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1.5px solid var(--line);
+  padding: 7px 16px;
+  border-radius: 100px;
+  background: none;
+  cursor: pointer;
+  color: rgba(23, 21, 18, 0.6);
+  transition: border-color 0.22s, color 0.22s, background 0.22s, transform 0.22s;
+  letter-spacing: 0.03em;
+  opacity: 0;
+}
+.filter.visible {
+  animation: filterPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.filter:hover {
+  border-color: var(--clay-soft);
+  color: var(--clay);
+  transform: translateY(-2px);
+}
+.filter.filterActive {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+/* ---- Cards list ---- */
+.list { display: flex; flex-direction: column; }
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  padding: 56px 0;
+  border-top: 1px solid var(--line);
+  align-items: center;
+  /* hidden by default — JS adds .inView */
+  opacity: 0;
+}
+.card.inView {
+  animation: cardReveal 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.card.reverse {}
+.card.reverse .visual { order: 2; }
+.card.reverse .body   { order: 1; }
+.list .card:last-child { border-bottom: 1px solid var(--line); }
+
+/* ---- Visual panel ---- */
+.visual {
+  aspect-ratio: 16 / 10.5;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.5s ease;
+  cursor: pointer;
+}
+.visual.slideIn {
+  animation: visualSlide 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+.visual.slideInRight {
+  animation: visualSlideRight 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+.card:hover .visual {
+  transform: translateY(-7px) scale(1.015);
+  box-shadow: 0 28px 72px rgba(23, 21, 18, 0.17);
+}
+
+.visualContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.visualTag {
+  position: relative;
+  z-index: 1;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: rgba(244, 239, 230, 0.9);
+  background: rgba(23, 21, 18, 0.3);
+  padding: 5px 12px;
+  border-radius: 100px;
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.04em;
+}
+
+/* Visual mock elements */
+.uiMock { display: flex; flex-direction: column; gap: 10px; width: 52%; }
+.uiBar { height: 10px; border-radius: 100px; background: rgba(255,255,255,0.25); width: 100%; }
+.uiBar.short { width: 58%; }
+.uiBtn { width: 38%; height: 26px; border-radius: 100px; background: rgba(255,255,255,0.35); margin-top: 4px; }
+
+.logoMock {
+  font-family: var(--display);
+  font-size: 80px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.28);
+  letter-spacing: -0.04em;
+}
+
+.chartMock {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 72px;
+}
+.bar { width: 18px; border-radius: 4px 4px 0 0; background: rgba(255,255,255,0.2); }
+.barActive { background: rgba(255,255,255,0.5); }
+
+.textMock { display: flex; flex-direction: column; gap: 8px; width: 54%; }
+.textLine { height: 8px; border-radius: 100px; background: rgba(255,255,255,0.24); }
+
+/* ---- Card gradient backgrounds ---- */
+/* Applied via inline style — colours defined in TSX */
+
+/* ---- Body text ---- */
+.body {
+  opacity: 0;
+}
+.body.slideIn {
+  animation: bodySlide 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+}
+.body.slideInLeft {
+  animation: bodySlideLeft 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+}
+
+.client {
+  font-family: var(--mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(23, 21, 18, 0.42);
+  margin-bottom: 10px;
+}
+.title {
+  font-family: var(--display);
+  font-weight: 450;
+  font-size: clamp(22px, 2.6vw, 30px);
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+  line-height: 1.14;
+}
+.desc {
+  font-size: 15.5px;
+  color: rgba(23, 21, 18, 0.68);
+  margin-bottom: 18px;
+  max-width: 430px;
+  line-height: 1.62;
+}
+
+.tags { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+.tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  border: 1px solid var(--line);
+  padding: 5px 12px;
+  border-radius: 100px;
+  color: rgba(23, 21, 18, 0.6);
+  letter-spacing: 0.03em;
+  opacity: 0;
+  transition: border-color 0.22s, color 0.22s, transform 0.22s;
+}
+.tag.visible {
+  animation: tagPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.tag:hover { border-color: var(--clay); color: var(--clay); transform: translateY(-2px); }
+
+.outcome {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--sage);
+  font-weight: 500;
+  opacity: 0;
+}
+.outcome.visible {
+  animation: outcomeFade 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 18px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--clay);
+  text-decoration: none;
+  transition: gap 0.22s ease;
+}
+.link svg { transition: transform 0.22s ease; }
+.link:hover { gap: 11px; }
+.link:hover svg { transform: translateX(4px); }
+
+/* ---- Responsive ---- */
+@media (max-width: 720px) {
+  .projects { padding: 64px 20px; }
+  .header { flex-direction: column; align-items: flex-start; }
+  .card { grid-template-columns: 1fr; gap: 28px; padding: 44px 0; }
+  .card.reverse .visual { order: 0; }
+  .card.reverse .body   { order: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sectionTag, .heading, .filter, .card,
+  .visual, .body, .tag, .outcome {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}
