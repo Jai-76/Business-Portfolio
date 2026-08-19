@@ -43,7 +43,7 @@ const Contact: React.FC = () => {
           </p>
 
           <div className={styles.directLinks}>
-            <a href="mailto:jaishekhawat007@gmail.com" className={styles.directLink}>
+            <a href="mailto:jaishekhawat175@gmail.com" className={styles.directLink}>
               <span className={styles.dlIcon}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -52,7 +52,7 @@ const Contact: React.FC = () => {
               </span>
               <div>
                 <b>Email</b>
-                <span>jaishekhawat007@gmail.com</span>
+                <span>jaishekhawat175@gmail.com</span>
               </div>
             </a>
             <a href="https://linkedin.com/in/jaideep-shekhawat" target="_blank" rel="noopener noreferrer" className={styles.directLink}>
